@@ -12,10 +12,8 @@ import net.minecraft.entity.EntityLivingBase;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
-import org.spongepowered.asm.mixin.injection.Slice;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(LayerArmorBase.class)
 public class MixinLayerArmorBase {
 
@@ -28,35 +26,22 @@ public class MixinLayerArmorBase {
         }
     }
 
-    @ModifyArgs(
+    @Redirect(
             method = "renderGlint",
-            slice = @Slice(
-                    from = @At(
-                            value = "INVOKE",
-                            target = "Lnet/minecraft/client/renderer/GlStateManager;disableLighting()V",
-                            ordinal = 0
-                    )
-            ),
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/renderer/GlStateManager;color(FFFF)V",
                     ordinal = 0
-            ),
-            require = 1,
-            allow = 1
+            )
     )
-    private void renderGlint(Args args) {
+    private void renderGlintColorHook(float red, float green, float blue, float alpha) {
         if (Glint.INSTANCE.getState()) {
             int rgb = Glint.INSTANCE.getGlintColor().getRGB();
-            float red   = ((rgb >> 16) & 0xFF) / 255.0F;
-            float green = ((rgb >> 8) & 0xFF) / 255.0F;
-            float blue  = (rgb & 0xFF) / 255.0F;
-            float alpha = ((rgb >> 24) & 0xFF) / 255.0F;
-
-            args.set(0, red);
-            args.set(1, green);
-            args.set(2, blue);
-            args.set(3, alpha);
+            red   = ((rgb >> 16) & 0xFF) / 255.0F;
+            green = ((rgb >> 8) & 0xFF) / 255.0F;
+            blue  = (rgb & 0xFF) / 255.0F;
+            alpha = ((rgb >> 24) & 0xFF) / 255.0F;
         }
+        net.minecraft.client.renderer.GlStateManager.color(red, green, blue, alpha);
     }
 }
