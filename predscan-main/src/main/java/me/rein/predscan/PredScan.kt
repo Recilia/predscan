@@ -71,11 +71,6 @@ import java.util.concurrent.CompletableFuture
 
 object PredScan {
 
-    /**
-     * Client Information
-     *
-     * This has all of the basic information.
-     */
     const val CLIENT_NAME = "predscan"
     const val CLIENT_AUTHOR = "rein"
     const val CLIENT_CLOUD = "https://github.com/Recilia/predscan"
@@ -88,10 +83,6 @@ object PredScan {
     val clientCommit = gitInfo["git.commit.id.abbrev"]?.let { "git-$it" } ?: "unknown"
     val clientBranch = gitInfo["git.branch"]?.toString() ?: "unknown"
 
-    /**
-     * Defines if the client is in development mode.
-     * This will enable update checking on commit time instead of regular legacy versioning.
-     */
     const val IN_DEV = true
 
     val clientTitle = buildString(32) {
