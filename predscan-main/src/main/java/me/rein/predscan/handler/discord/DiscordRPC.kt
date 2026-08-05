@@ -106,11 +106,11 @@ object DiscordRPC : MinecraftInstance, Listenable {
 
             discordRPCModule?.let { module ->
                 val logoUrl = if (module.animated) {
-                    "https://skiddermc.github.io/predscan/rpc/predscan.gif"
+                    "https://github.com/Comfortability/Assets/blob/main/logo.gif?raw=true"
                 } else {
-                    "https://skiddermc.github.io/predscan/rpc/predscan.png"
+                    "https://github.com/Comfortability/Assets/blob/main/pred.jpg?raw=true"
                 }
-                builder.setLargeImage(logoUrl, "made by Zywl <3")
+                builder.setLargeImage(logoUrl, "made by rein, for predators. <3")
 
                 builder.setDetails("$predscanwebsite$CLIENT_VERSION")
 
