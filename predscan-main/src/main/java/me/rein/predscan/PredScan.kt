@@ -92,7 +92,7 @@ object PredScan {
         append(' ')
         append(clientCommit)
         if (IN_DEV) {
-            append(" | DEVELOPMENT BUILD")
+            append(" | PREDSCAN PDF CLIENT BY REIN")
         }
     }
 
@@ -120,13 +120,11 @@ object PredScan {
     // Discord RPC
     var discordRPC = DiscordRPC
 
-    /**
-     * Start IO tasks
-     */
+
     fun preload(): CompletableFuture<*> {
         me.rein.predscan.utils.client.javaVersion
 
-        // Change theme of Swing
+
         UIManager.setLookAndFeel(FlatMacLightLaf())
 
         return SharedScopes.IO.future {
@@ -154,9 +152,7 @@ object PredScan {
         }
     }
 
-    /**
-     * Execute if client will be started
-     */
+
     fun startClient() {
         isStarting = true
         isLoadingConfig = true
