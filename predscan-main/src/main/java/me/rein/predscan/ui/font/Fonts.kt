@@ -383,16 +383,24 @@ object Fonts : MinecraftInstance {
         fontsDir.mkdirs()
         val outputFile = File(fontsDir, "outfit.zip")
         if (!outputFile.exists()) {
-            LOGGER.info("Downloading roboto fonts...")
-            Downloader.downloadWholeFile("$CLIENT_CLOUD/fonts/Outfit.zip", outputFile)
-            LOGGER.info("Extract roboto fonts...")
-            outputFile.extractZipTo(fontsDir)
+            LOGGER.info("Downloading outfit fonts...")
+            try {
+                Downloader.downloadWholeFile("$CLIENT_CLOUD/raw/main/fonts/Outfit.zip", outputFile)
+                LOGGER.info("Extracting outfit fonts...")
+                outputFile.extractZipTo(fontsDir)
+            } catch (e: Exception) {
+                LOGGER.warn("Failed to download outfit fonts: ${e.message}")
+            }
         }
 
         val fontZipFile = File(fontsDir, "font.zip")
         if (!fontZipFile.exists()) {
             LOGGER.info("Downloading additional fonts...")
-            Downloader.downloadWholeFile("${FONTS}/Font.zip", fontZipFile)
+            try {
+                Downloader.downloadWholeFile("${FONTS}/Font.zip", fontZipFile)
+            } catch (e: Exception) {
+                LOGGER.warn("Failed to download additional fonts: ${e.message}")
+            }
         }
 
         if(fontZipFile.exists()){
