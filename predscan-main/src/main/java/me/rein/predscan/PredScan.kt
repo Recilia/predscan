@@ -78,10 +78,10 @@ object PredScan {
      */
     const val CLIENT_NAME = "predscan"
     const val CLIENT_AUTHOR = "rein"
-    const val CLIENT_CLOUD = "https://cloud.liquidbounce.net/LiquidBounce"
-    const val CLIENT_WEBSITE = "predscaninfo.github.io"
-    const val CLIENT_GITHUB = "https://github.com/SkidderMC/PredScan"
-    const val CLIENT_VERSION = "b16"
+    const val CLIENT_CLOUD = "https://github.com/Recilia/predscan"
+    const val CLIENT_WEBSITE = "https://www.reddit.com/r/Overwatch/comments/1rnumog/what_does_predscan_mean/"
+    const val CLIENT_GITHUB = "https://github.com/Recilia/predscan"
+    const val CLIENT_VERSION = "a1"
 
     val clientVersionText = gitInfo["git.build.version"]?.toString() ?: "unknown"
     val clientVersionNumber = clientVersionText.substring(1).toIntOrNull() ?: 0 // version format: "b<VERSION>" on legacy
