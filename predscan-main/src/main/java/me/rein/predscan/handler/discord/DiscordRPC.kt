@@ -85,7 +85,7 @@ object DiscordRPC : MinecraftInstance, Listenable {
             })
             ipcClient?.connect()
         } catch (e: Throwable) {
-            LOGGER.error("Failed to setup Discord RPC")
+            LOGGER.error("Failed to setup Discord RPC", e)
         }
 
     }
@@ -105,12 +105,7 @@ object DiscordRPC : MinecraftInstance, Listenable {
             discordRPCModule = DiscordRPCModule
 
             discordRPCModule?.let { module ->
-                val logoUrl = if (module.animated) {
-                    "https://github.com/Comfortability/Assets/blob/main/logo.gif?raw=true"
-                } else {
-                    "https://github.com/Comfortability/Assets/blob/main/pred.jpg?raw=true"
-                }
-                builder.setLargeImage(logoUrl, "made by rein, for predators. <3")
+                builder.setLargeImage("image-1024x1024", "made by rein, for predators. <3")
 
                 builder.setDetails("$predscanwebsite$CLIENT_VERSION")
 
@@ -167,7 +162,7 @@ object DiscordRPC : MinecraftInstance, Listenable {
     }
 
     private fun loadConfiguration() {
-        appID = discordApp.toLong()
+        appID = discordApp.toLongOrNull() ?: 1040929807510282280L
         assets["rpc"] = "rpc"
     }
 }
