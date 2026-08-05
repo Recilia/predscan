@@ -142,22 +142,22 @@ object PredScan {
             LOGGER.info("Starting preload tasks of $CLIENT_NAME")
 
             // Download and extract fonts
-            Fonts.downloadFonts()
+            runCatching { Fonts.downloadFonts() }.onFailure { LOGGER.warn("Failed font preload step", it) }
 
             // Check update
-            ClientUpdate.reloadNewestVersion()
+            runCatching { ClientUpdate.reloadNewestVersion() }.onFailure { LOGGER.warn("Failed update check step", it) }
 
             // Get MOTD
-            reloadMessageOfTheDay()
+            runCatching { reloadMessageOfTheDay() }.onFailure { LOGGER.warn("Failed MOTD step", it) }
 
             // Load languages
-            loadLanguages()
+            runCatching { loadLanguages() }.onFailure { LOGGER.warn("Failed languages step", it) }
 
             // Load alt generators
-            loadActiveGenerators()
+            runCatching { loadActiveGenerators() }.onFailure { LOGGER.warn("Failed alt generators step", it) }
 
             // Load SRG file
-            loadSrg()
+            runCatching { loadSrg() }.onFailure { LOGGER.warn("Failed SRG step", it) }
 
             LOGGER.info("Preload tasks of $CLIENT_NAME are completed!")
         }

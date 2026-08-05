@@ -39,34 +39,36 @@ object Remapper {
         synchronized(this) {
             if (mappingsLoaded) return
 
-            mappingsLoaded = false
+            try {
+                // Download sha256 file
+                val sha256File = File(dir, "mcp-$SRG_NAME.srg.sha256")
+                if (!sha256File.exists() || !sha256File.isFile || sha256File.isEmpty) {
+                    sha256File.createNewFile()
 
-            // Download sha256 file
-            val sha256File = File(dir, "mcp-$SRG_NAME.srg.sha256")
-            if (!sha256File.exists() || !sha256File.isFile || sha256File.isEmpty) {
-                sha256File.createNewFile()
-
-                Downloader.downloadWholeFile("$CLIENT_CLOUD/srgs/mcp-$SRG_NAME.srg.sha256", sha256File)
-                LOGGER.info("[Remapper] Downloaded $SRG_NAME sha256.")
-            }
-
-            // Check if srg file is already downloaded
-            if (!srgFile.exists() || !hashMatches(srgFile, sha256File)) {
-                // Download srg file
-                srgFile.createNewFile()
-
-                runBlocking {
-                    Downloader.download("$CLIENT_CLOUD/srgs/mcp-$SRG_NAME.srg", srgFile)
+                    Downloader.downloadWholeFile("$CLIENT_CLOUD/raw/main/srgs/mcp-$SRG_NAME.srg.sha256", sha256File)
+                    LOGGER.info("[Remapper] Downloaded $SRG_NAME sha256.")
                 }
-                LOGGER.info("[Remapper] Downloaded $SRG_NAME.")
+
+                // Check if srg file is already downloaded
+                if (!srgFile.exists() || !hashMatches(srgFile, sha256File)) {
+                    // Download srg file
+                    srgFile.createNewFile()
+
+                    runBlocking {
+                        Downloader.download("$CLIENT_CLOUD/raw/main/srgs/mcp-$SRG_NAME.srg", srgFile)
+                    }
+                    LOGGER.info("[Remapper] Downloaded $SRG_NAME.")
+                }
+
+                // Load srg
+                if (srgFile.exists() && !srgFile.isEmpty) {
+                    parseSrg()
+                    mappingsLoaded = true
+                    LOGGER.info("[Remapper] Successfully loaded SRG mappings.")
+                }
+            } catch (e: Exception) {
+                LOGGER.warn("[Remapper] Failed to download/load SRG mappings: ${e.message}")
             }
-
-            // Load srg
-            parseSrg()
-
-            mappingsLoaded = true
-
-            LOGGER.info("[Remapper] Successfully loaded SRG mappings.")
         }
     }
 
