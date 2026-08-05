@@ -191,13 +191,12 @@ reobf {
     }
 }
 
-configurations {
-    compileClasspath {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
-    include {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
+
+
+
+gitProperties {
+    dotGitDirectory = file("${project.rootDir}/../.git")
+    failOnNoGitDirectory = false
 }
 
 tasks.reobfShadowJar.mustRunAfter("shadowJar")
