@@ -7,7 +7,7 @@ package me.rein.predscan.injection.forge.mixins.entity;
 
 import me.rein.predscan.utils.inventory.SilentHotbar;
 import net.minecraft.entity.player.InventoryPlayer;
-import org.spongepowered.asm.lib.Opcodes;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
