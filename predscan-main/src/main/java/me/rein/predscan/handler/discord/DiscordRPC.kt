@@ -39,7 +39,7 @@ object DiscordRPC : MinecraftInstance, Listenable {
     // Status of running
     var running: Boolean = false
 
-    private var predscanwebsite = "predscaninfo.github.io - "
+    private var predscanwebsite = "PDF CLIENT for Minecraft"
     private var discordRPCModule: DiscordRPCModule? = null
 
     /**
@@ -107,7 +107,7 @@ object DiscordRPC : MinecraftInstance, Listenable {
             discordRPCModule?.let { module ->
                 builder.setLargeImage("image-1024x1024", "made by rein, for predators. <3")
 
-                builder.setDetails("$predscanwebsite$CLIENT_VERSION")
+                builder.setDetails("$predscanwebsite$")
 
                 // Set display info based on module settings - options
 
