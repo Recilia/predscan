@@ -107,7 +107,7 @@ object DiscordRPC : MinecraftInstance, Listenable {
             discordRPCModule?.let { module ->
                 builder.setLargeImage("image-1024x1024", "made by rein, for predators. <3")
 
-                builder.setDetails("$predscanwebsite$")
+                builder.setDetails("$predscanwebsite")
 
                 // Set display info based on module settings - options
 
